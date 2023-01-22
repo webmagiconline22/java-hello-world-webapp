@@ -33,7 +33,7 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-	<mirrors>
+<!-- 	<mirrors>
 		<mirror>
 			<id>java-hello-world-webapp-java-hello-world-webapp</id>
 			<name>java-hello-world-webapp-java-hello-world-webapp</name>
@@ -41,7 +41,7 @@
 			<mirrorOf>*</mirrorOf>
 		</mirror>
 	</mirrors>
-	<build>
+	<build> -->
 		<finalName>java-hello-world</finalName>
 	</build>
 </project>
