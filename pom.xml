@@ -40,8 +40,8 @@
 			<url>https://java-hello-world-webapp-467426629487.d.codeartifact.us-east-1.amazonaws.com/maven/java-hello-world-webapp/</url>
 			<mirrorOf>*</mirrorOf>
 		</mirror>
-	</mirrors>
-	<build> -->
+	</mirrors> -->
+	<build>
 		<finalName>java-hello-world</finalName>
 	</build>
 </project>
