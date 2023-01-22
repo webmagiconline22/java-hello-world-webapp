@@ -33,14 +33,13 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-	<mirrors>
-		<mirror>
+	<distributionManagement>
+		<repository>
 			<id>java-hello-world-webapp-java-hello-world-webapp</id>
 			<name>java-hello-world-webapp-java-hello-world-webapp</name>
 			<url>https://java-hello-world-webapp-467426629487.d.codeartifact.us-east-1.amazonaws.com/maven/java-hello-world-webapp/</url>
-			<mirrorOf>*</mirrorOf>
-		</mirror>
-	</mirrors>
+		</repository>
+	</distributionManagement>
 	<build>
 		<finalName>java-hello-world</finalName>
 	</build>
