@@ -15,8 +15,8 @@ pipeline {
 
         // Push the Docker image to the Docker registry
         withCredentials([usernamePassword(credentialsId: 'your-docker-registry-credentials-id', usernameVariable: 'DOCKER_REGISTRY_USERNAME', passwordVariable: 'DOCKER_REGISTRY_PASSWORD')]) {
-          sh "docker login -u ${DOCKER_REGISTRY_USERNAME} -p ${DOCKER_REGISTRY_PASSWORD} ${DOCKER_REGISTRY}"
-          sh "docker push ${DOCKER_REGISTRY}/${DOCKER_REPO}:${DOCKER_TAG}"
+          sh "docker login -u ${DOCKER_REGISTRY_USERNAME} -p ${DOCKER_REGISTRY_PASSWORD}"
+          sh "docker push ${DOCKER_REPO}:${DOCKER_TAG}"
         }
       }
     }
