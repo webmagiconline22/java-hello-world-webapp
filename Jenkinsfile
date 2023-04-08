@@ -1,48 +1,24 @@
 pipeline {
-    agent any
-    
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
+  agent any
+  environment {
+    DOCKER_REPO = "dab8106/javaapp08042023"
+    DOCKER_TAG = "latest"
+  }
+  stages {
+    stage('Build and Push Docker Image') {
+      steps {
+        // Checkout your code from your Git repository
+       //  checkout([$class: 'GitSCM', branches: [[name: '*/your-branch-name']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'your-credentials-id', url: 'your-git-repo-url']]])
+
+        // Build the Docker image
+        sh "docker build -t ${DOCKER_REPO}:${DOCKER_TAG} ."
+
+        // Push the Docker image to the Docker registry
+        withCredentials([usernamePassword(credentialsId: 'your-docker-registry-credentials-id', usernameVariable: 'DOCKER_REGISTRY_USERNAME', passwordVariable: 'DOCKER_REGISTRY_PASSWORD')]) {
+          sh "docker login -u ${DOCKER_REGISTRY_USERNAME} -p ${DOCKER_REGISTRY_PASSWORD} ${DOCKER_REGISTRY}"
+          sh "docker push ${DOCKER_REGISTRY}/${DOCKER_REPO}:${DOCKER_TAG}"
         }
-        
-        stage('Build') {
-            steps {
-                sh 'mvn clean install'
-            }
-        }
-        
-        stage('Unit tests and code coverage') {
-            steps {
-                sh 'mvn jacoco:prepare-agent test jacoco:report'
-                publishHTML(target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: true,
-                    reportDir: 'target/site/jacoco',
-                    reportFiles: 'index.html',
-                    reportName: 'Code Coverage Report'
-                ])
-            }
-        }
-        
-        stage('Deploy to Tomcat') {
-            environment {
-                TOMCAT_URL = 'http://localhost:8080'
-            }
-            steps {
-                sh 'mvn tomcat7:deploy -Dtomcat.url=${TOMCAT_URL} -Dtomcat.username=<username> -Dtomcat.password=<password>'
-            }
-        }
-        
-        stage('SonarQube analysis') {
-            steps {
-                withSonarQubeEnv('SonarQubeServer') {
-                    sh 'mvn sonar:sonar'
-                }
-            }
-        }
+      }
     }
+  }
 }
