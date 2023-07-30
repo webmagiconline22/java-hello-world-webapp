@@ -10,6 +10,15 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud'
+    organization: 'techish'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: '93fe5d4444913de33f7dd2fa710826a218fafaf5'
+    cliProjectName: 'JavaApp'
+    cliSources: '.'
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
@@ -20,3 +29,7 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
+
+- task: SonarCloudAnalyze@1
+  inputs:
+    jdkversion: 'JAVA_HOME_11_X64'
